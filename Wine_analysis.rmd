@@ -90,7 +90,7 @@ plot_bar <- function(dataset, x, binwidth, fill_color, g_title, x_title, y_title
 # Create and show the first plot
 h1 <- plot_bar(wine, "quality", 1, "#44151f", 
                 'Wine quality distribution', 'Quality', 'Count')
-h1 + scale_x_continuous(breaks=seq(1,10,1))
+h1 + scale_x_continuous(breaks=seq(1,10,1)) 
 ``` 
 
 The distribution of quality is normal, with the mean being 5.6 on the scale of 10. The maximum quality is 8.0 - there are no perfect wines in this dataset. Similarly, let's look at other variables. 
@@ -322,12 +322,12 @@ ggplot(aes(quality, alcohol), data = wine) +
 
 ```{r}
 final_p_0 <- ggplot(data = wine, aes(y = alcohol, x = quality, group = quality)) +
-   geom_boxplot(fill = "white", colour = "#0c1d55") +
+   geom_boxplot(fill = "#97bced", colour = "#41618d") +
    scale_x_continuous(breaks=seq(1,14,1)) +
    labs(title = 'Correlation between quality and alcohol', 
-        y = 'Alcohol (%)', x = 'Quality') 
+        y = 'Alcohol (%)', x = 'Quality')  
 
-final_p_0
+final_p_0 
 ``` 
 
 The median of alcohol contents moves up slightly with higher quality, but this is a weak relationship (just look at the outliers for the average quality of 5). 
@@ -369,15 +369,13 @@ Let's add one more layer (wine quality) to the plots and see if we can detect st
 # Plot fixed.acidity vs. density
   ggplot(data = wine, 
        aes(x = fixed.acidity, y = density, color = factor(quality))) +
-       geom_point(alpha = .6, position = position_jitter(h = 0), size = 2) +
-       scale_color_brewer(type = 'div',  
+       geom_point(alpha = .5, position = position_jitter(h = 0), size = 2) +
+       scale_color_brewer(type = 'seq', palette = 'GnBu', 
                      guide = guide_legend(title = 'Quality', reverse = T,
                                           override.aes = list(alpha = .6, size = 4))) + 
        labs(title = 'Fixed acidity vs density correlation by quality', 
             x = 'Fixed acidity', y = 'Density')
   
-  
-         # scale_color_brewer(palette = "Set5", type='seq') +
 
 ```
 
@@ -388,7 +386,7 @@ We can see that wines of higher quality are slightly less dense for the same lev
   ggplot(data = wine, 
        aes(x = fixed.acidity, y = density)) +
        geom_point(alpha = 1/3, position = position_jitter(h = 0), 
-                  size = 2, color = '#974e61') +
+                  size = 2, color = '#5177aa') +
        facet_wrap(~quality) +
        geom_smooth(method = 'lm', color = '#3c0715') + 
        labs(title = 'Fixed acidity vs density correlation by quality', 
@@ -401,8 +399,8 @@ Let's check other parameters.
 # Plot fixed.acidity vs. pH
   ggplot(data = wine, 
        aes(x = fixed.acidity, y = pH, color = factor(quality))) +
-       geom_point(alpha = .6, position = position_jitter(h = 0), size = 2) +
-       scale_color_brewer(type = 'div',  
+       geom_point(alpha = .5, position = position_jitter(h = 0), size = 2) +
+       scale_color_brewer(type = 'seq', palette = 'GnBu', 
                      guide = guide_legend(title = 'Quality', reverse = T,
                                           override.aes = list(alpha = .6, size = 4))) + 
        labs(title = 'Fixed acidity vs pH correlation by quality', 
@@ -413,7 +411,7 @@ Let's check other parameters.
   ggplot(data = wine, 
        aes(x = fixed.acidity, y = pH)) +
        geom_point(alpha = 1/3, position = position_jitter(h = 0), 
-                  size = 2, color = '#974e61') +
+                  size = 2, color = '#5177aa') +
        geom_smooth(method = 'lm', color = '#3c0715') + 
        facet_wrap(~quality) +
        labs(title = 'Fixed acidity vs pH correlation by quality', 
@@ -424,8 +422,8 @@ Let's check other parameters.
 # Plot volatile.acidity vs. citric.acid
   ggplot(data = wine, 
        aes(x = volatile.acidity, y = citric.acid, color = factor(quality))) +
-       geom_point(alpha = .6, position = position_jitter(h = 0), size = 2) +
-       scale_color_brewer(type = 'div',  
+       geom_point(alpha = .5, position = position_jitter(h = 0), size = 2) +
+       scale_color_brewer(type = 'seq', palette = 'GnBu',
                      guide = guide_legend(title = 'Quality', reverse = T,
                                           override.aes = list(alpha = .6, size = 4))) + 
        labs(title = 'Volatile acidity vs citric acid correlation by quality', 
@@ -435,7 +433,7 @@ Let's check other parameters.
   ggplot(data = wine, 
        aes(x = volatile.acidity, y = citric.acid)) +
        geom_point(alpha = 1/3, position = position_jitter(h = 0), 
-                  size = 2, color = '#974e61') +
+                  size = 2, color = '#5177aa') +
        geom_smooth(method = 'lm', color = '#3c0715') + 
        facet_wrap(~quality) +
        labs(title = 'Volatile acidity vs citric acid correlation by quality', 
@@ -446,8 +444,8 @@ Let's check other parameters.
 # Plot citric.acid vs pH
   ggplot(data = wine, 
        aes(x = citric.acid, y = pH, color = factor(quality))) +
-       geom_point(alpha = .6, position = position_jitter(h = 0), size = 2) +
-       scale_color_brewer(type = 'div',  
+       geom_point(alpha = .5, position = position_jitter(h = 0), size = 2) +
+       scale_color_brewer(type = 'seq', palette = 'GnBu',
                      guide = guide_legend(title = 'Quality', reverse = T,
                                           override.aes = list(alpha = .6, size = 4))) + 
        labs(title = 'Citric acid vs pH correlation by quality', 
@@ -458,7 +456,7 @@ Let's check other parameters.
   ggplot(data = wine, 
        aes(x = citric.acid, y = pH)) +
        geom_point(alpha = 1/3, position = position_jitter(h = 0), 
-                  size = 2, color = '#974e61') +
+                  size = 2, color = '#5177aa') +
        geom_smooth(method = 'lm', color = '#3c0715') + 
        facet_wrap(~quality) +
        labs(title = 'Citric acid vs pH correlation by quality', 
@@ -487,9 +485,9 @@ And plot using this factor:
 
 ```{r}
 ggplot(aes(quality, alcohol, color = citric.acid.cut), data = wine) + 
-       geom_point(alpha = 1/5, position = position_jitter(h = 0), 
+       geom_point(alpha = .4, position = position_jitter(h = 0), 
               size = 3) +
-       scale_color_brewer(type = 'div',  
+       scale_color_brewer(type = 'seq', palette = 'BuPu',
                      guide = guide_legend(title = 'Cut by citric acid', 
                                           reverse = T,
                                           override.aes = list(alpha = .6, 
@@ -513,19 +511,20 @@ wine$quality.cut <- cut(wine$quality, breaks=c(0,4,6,10))
 # Plot 
 final_p_1 <- ggplot(data=wine, aes(x=alcohol, y=citric.acid)) +
     coord_cartesian(
-        xlim=c(quantile(wine$alcohol,.01),quantile(wine$alcohol,.99)),
-        ylim=c(quantile(wine$citric.acid,.01),quantile(wine$citric.acid,.99))
+        xlim=c(quantile(wine$alcohol,.01), quantile(wine$alcohol,.99)),
+        ylim=c(quantile(wine$citric.acid,.01), quantile(wine$citric.acid,.99))
         ) +
-    geom_jitter(alpha=.4, aes(size=quality.cut, color=quality.cut)) +
+    geom_jitter(alpha=.4, aes(size=2, color=quality.cut)) +
     geom_vline(xintercept = wine.alcohol.mean, 
                linetype='longdash', color='black', alpha=.5) +
     geom_hline(yintercept = wine.citric.acid.mean, 
                linetype='longdash', color='black',
-               alpha=.6) +
+               alpha=.5) +
     labs(title = 'Correlation between alcohol and citric acid by quality', 
          x = 'Alcohol (%)', y = 'Citric acid (g/L)') +
-    scale_color_brewer(palette = "Set2", type = 'div') + 
-    guides(color=guide_legend(title="Quality interval"), size=FALSE)
+    scale_color_brewer(type = 'seq', palette = 'BuPu') + 
+    guides(color=guide_legend(title="Quality interval", reverse = T, 
+                              override.aes = list(alpha = .6, size = 4)), size=FALSE)
 
 final_p_1
 ```
@@ -541,16 +540,17 @@ ggplot(data=wine, aes(x=alcohol, y=residual.sugar)) +
         xlim=c(quantile(wine$alcohol,.01),quantile(wine$alcohol,.99)),
         ylim=c(quantile(wine$residual.sugar,.01),quantile(wine$residual.sugar,.99))
         ) +
-    geom_jitter(alpha=.3, aes(size=quality.cut, color=quality.cut)) +
+    geom_jitter(alpha=.2, aes(size=2, color=quality.cut)) +
     geom_vline(xintercept = wine.alcohol.mean, 
                linetype='longdash', color='black', alpha=.5) +
     geom_hline(yintercept = wine.residual.sugar.mean, 
                linetype='longdash', color='black',
-               alpha=.6) +
+               alpha=.5) +
     labs(title = 'Correlation between alcohol and residual sugar by quality', 
        x = 'Alcohol', y = 'Residual sugar') +
-    scale_color_brewer(palette = "Set2") + 
-    guides(color=guide_legend(title="Quality interval"), size=FALSE)
+    scale_color_brewer(type = 'seq', palette = 'BuPu') + 
+    guides(color=guide_legend(title="Quality interval", reverse = T, 
+                              override.aes = list(alpha = .6, size = 4)), size=FALSE)
 ```
 
 Residual sugar plot is not that indicative, and I would not confirm that the balance between residual sugar and alcohol level significantly impacts the quality. 
@@ -571,7 +571,7 @@ Let's take a closer look at the previous plots, adding additional variables and 
        scale_color_brewer(palette = "Set1") +
        labs(title = 'Smoothing of chlorides and alcohol by quality', 
             y = 'Chlorides', x = 'Alcohol') + 
-       guides(color=guide_legend(title="Quality interval"), size=FALSE)
+       guides(color=guide_legend(title="Quality interval", reverse = T), size=FALSE)
 ```
 
 ```{r}
@@ -586,7 +586,7 @@ final_p_2 <- ggplot(data = wine,
        scale_color_brewer(palette = "Set1") +
        labs(title = 'Smoothing of pH and alcohol by quality', 
            y = 'pH', x = 'Alcohol (%)') + 
-       guides(color=guide_legend(title="Quality interval"), size=FALSE)
+       guides(color=guide_legend(title="Quality interval", reverse = T), size=FALSE)
 
 final_p_2
 
