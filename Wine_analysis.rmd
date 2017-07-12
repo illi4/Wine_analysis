@@ -1,5 +1,15 @@
-Red wine analysis by Ilia Slobodchikov
-========================================================
+---
+title: "Red wine analysis"
+author: Ilia Slobodchikov
+date: December 12, 1997
+output: 
+  html_document:
+    toc: true
+    depth: 3  
+    number_sections: true 
+    # theme: united many options for a theme 
+    highlight: tango  # specifies the syntax highlighting style
+---
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.path='Figs/', echo=FALSE, warning=FALSE, message=FALSE)
 ```
@@ -20,6 +30,7 @@ theme_set(theme_minimal(11))
 # Load the Data
 wine <- read.csv('wineQualityReds.csv')
 ```
+
 ## Task statement
 
 The goal of this project is to conduct exploratory data analysis on a dataset containing wine information and to explore the variables, structure, patterns, oddities, and underlying relationships in the dataset. I will try to answer the following questions: 
@@ -56,7 +67,7 @@ This dataset includes 1599 observations, and the first variable (X) is just a nu
 
 First, let's perform some preliminary exploration of the dataset by looking at individual variables. 
 
-### 1. Wine quality 
+### Wine quality 
 
 Summary and distribution of values: 
 
@@ -95,7 +106,7 @@ h1 + scale_x_continuous(breaks=seq(1,10,1))
 
 The distribution of quality is normal, with the mean being 5.6 on the scale of 10. The maximum quality is 8.0 - there are no perfect wines in this dataset. Similarly, let's look at other variables. 
 
-### 2. Alcohol level
+### Alcohol level
  
 ```{r}
 summary(wine$alcohol)
@@ -109,7 +120,7 @@ h2 + scale_x_continuous(breaks=seq(0,15,0.5))
 
 The distribution is positively skewed, and the median value is 10.2%. Median is a better measure than mean in this case since the distribution is skewed. The most usual (frequent) alcohol level is 9.5%.   
 
-### 3. Fixed acidity, volatile acidity, and citric acid
+### Fixed acidity, volatile acidity, and citric acid
 
 ```{r echo=FALSE}
 cat("Fixed acidity:")
@@ -151,7 +162,7 @@ h4 + scale_x_continuous(breaks=seq(0,2,0.2))
 
 Looks like the distribution is trimodal. 
 
-### 4. Free sulfur dioxide and total sulfur dioxide
+### Free sulfur dioxide and total sulfur dioxide
 
 ```{r message=F, echo=FALSE}
 # Plotting histograms
@@ -168,7 +179,7 @@ grid.arrange(h6, h7, ncol = 2)
 
 Both distributions are positively skewed. 
 
-### 5. Density
+### Density
 
 ```{r message=F, echo=FALSE}
 # Plotting histograms
@@ -178,7 +189,7 @@ plot_hist(wine, "density", 0.0001, "#44151f",
 
 The distribution is normal, but very noisy. 
 
-### 6. Residual sugar, chlorides, sulphates, pH
+### Residual sugar, chlorides, sulphates, pH
 
 ```{r message=F, echo=FALSE}
 # Plotting histograms
@@ -247,6 +258,12 @@ g <- g + theme(
 print(g, bottomHeightProportion = 0.5, leftWidthProportion = .5)
 ```
 
+We can also use ggcorr function to look at correlation coefficients: 
+
+```{r ggcorr}
+ggcorr(wine[, 2:13], layout.exp = 1)
+```
+
 From the quick glance, we can notice the following strong correlations (corr > 0.5 or < -0.5): 
 
 Property | Positive correlation | Negative correlation
@@ -264,7 +281,7 @@ The strongest correlation (0.668) is observed between free sulfur dioxide and to
 
 Let's take a closer look at the parameters which inserest us the most (alcohol content, quality).
 
-### 1. Correlation between chemical properties
+### Correlation between chemical properties
 
 Let's examine correlations between some of the properties above. 
 
@@ -307,7 +324,7 @@ p4
 
 For the reviewed properties, we can see correlations supported by linear models. However, there is a bit of spreading on the plots - we can try to perform multivariate analysis and check if this this helps to split the plots. 
 
-### 2. Wine quality and alcohol
+### Wine quality and alcohol
 
 Note that the correlation 0.476 which we saw above is not strong and therefore cannot really be used for predictions. Let's take a look at more detailed plots. 
 
@@ -332,7 +349,7 @@ final_p_0
 
 The median of alcohol contents moves up slightly with higher quality, but this is a weak relationship (just look at the outliers for the average quality of 5). 
 
-### 3. Parameters which strongly influence the alcohol level in wine?
+### Parameters which strongly influence the alcohol level in wine?
 
 From the ggpairs plot, we saw that alcohol is not strongly correlated with any of the variables. The strongest correlation is with density, chlorides, pH and total sulfur dioxide. 
 
@@ -361,7 +378,7 @@ The plots do not really look indicative. We can try to add more variables on the
 
 ## Multivariate plots and analysis
 
-### 1. Chemical properties drill-down analysis 
+### Chemical properties drill-down analysis 
 
 Let's add one more layer (wine quality) to the plots and see if we can detect stronger correlations. 
 
@@ -376,7 +393,7 @@ Let's add one more layer (wine quality) to the plots and see if we can detect st
        labs(title = 'Fixed acidity vs density correlation by quality', 
             x = 'Fixed acidity', y = 'Density')
   
-
+# We can also add theme_dark() as a layer if required
 ```
 
 We can see that wines of higher quality are slightly less dense for the same level of fixed acidity. Let's also split the plots by quality and add a linear model to each plot: 
@@ -463,7 +480,7 @@ Let's check other parameters.
             x = 'Citric acid', y = 'pH')
 ```
 
-### 2. Wine quality and alcohol 
+### Wine quality and alcohol 
 
 Let's check the relationship between wine alcohol level and quality, looking at other variables as well.
 
@@ -555,7 +572,7 @@ ggplot(data=wine, aes(x=alcohol, y=residual.sugar)) +
 
 Residual sugar plot is not that indicative, and I would not confirm that the balance between residual sugar and alcohol level significantly impacts the quality. 
 
-### 3. Parameters influencing alcohol level
+### Parameters influencing alcohol level
 
 Let's take a closer look at the previous plots, adding additional variables and limiting the axis. I will not look at density because the plot was quite scattered and because the density values change insignificantly. 
 
