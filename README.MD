@@ -11,5 +11,5 @@ The project uses [red wines dataset](http://dx.doi.org/10.1016/j.dss.2009.05.016
 ## Files
 The following files can be found in the repository: 
 - [wineQualityReds.csv](wineQualityReds.csv): the dataset
-- [Wine_analysis.html](https://cdn.rawgit.com/illi4/Wine_analysis/9283e551/Wine_analysis.html): results of the analysis and conclusions
+- [Wine_analysis.html](https://cdn.rawgit.com/illi4/Wine_analysis/6bf57246/Wine_analysis.html): results of the analysis and conclusions
 - [Wine_analysis.rmd](Wine_analysis.rmd): RStudio rmd file
